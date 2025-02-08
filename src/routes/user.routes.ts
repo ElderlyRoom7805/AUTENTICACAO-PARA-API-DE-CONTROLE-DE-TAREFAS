@@ -5,10 +5,11 @@ import { ValidateBody } from "../middlewares/validateBody.midlewares";
 import { DoesEmailExist } from "../middlewares/doesEmailExist";
 import { loginUserSchema } from "../schemas/user.schema";
 import { verifyToken } from "../middlewares/verifyToken";
+import { ValidateLogin } from "../middlewares/validateLogin.middleware";
 
 export const userRouter = Router()
 const usersControllers = new UsersControllers()
 
+userRouter.post("/login", ValidateBody.execute({body: loginUserSchema}), ValidateLogin.execute, usersControllers.login)
 userRouter.post("/", ValidateBody.execute({body: registerUserSchema}), DoesEmailExist.execute, usersControllers.register)
-userRouter.post("/login", ValidateBody.execute({body: loginUserSchema}), usersControllers.login)
 userRouter.get("/profile", verifyToken.execute, usersControllers.profile)

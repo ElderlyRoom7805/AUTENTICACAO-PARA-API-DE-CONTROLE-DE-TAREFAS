@@ -1,25 +1,13 @@
 import jwt from "jsonwebtoken"
-import { TLoginReturn, TUserLoginBody, TUserRegisterBody, TUserReturn } from "../interfaces/user.interfaces"
+import { IUser, TLoginReturn, TUserLoginBody, TUserRegisterBody, TUserReturn } from "../interfaces/user.interfaces"
 import { prisma } from "../database/prisma"
 import bcrypt from "bcrypt";
 import { AppError } from "../errors/appError";
 import { userReturn } from "../schemas/user.schema";
 
 export class UserServices{
-    async login(body: TUserLoginBody): Promise<TLoginReturn>{
-        const user = await prisma.user.findFirst({where: {email: body.email}})
-        
-        if(!user){
-            throw new AppError("User not exists", 404); 
-        }
-        
-        const compare = await bcrypt.compare(body.password, user.password);
-
-        if(!compare){
-            throw new AppError("Email and password doesn't match", 401); 
-        }
-        
-        const token = jwt.sign({id: user.id}, process.env.JWT_SECRET as string, {expiresIn: "24h"})
+    async login(user: IUser): Promise<TLoginReturn>{
+        const token = jwt.sign({id: user.id}, process.env.JWT_SECRET as string)
         return {acessToken: token, user: userReturn.parse(user)}
     }
 

@@ -6,7 +6,7 @@ import { container, injectable } from "tsyringe";
 export class UsersControllers{
     async login(req: Request, res: Response): Promise<Response>{
         const userServices = container.resolve(UserServices)
-        const response = await userServices.login(req.body)
+        const response = await userServices.login(res.locals.user)
         return res.status(200).json(response)
     }
 
