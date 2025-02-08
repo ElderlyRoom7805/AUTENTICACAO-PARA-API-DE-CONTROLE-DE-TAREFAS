@@ -10,13 +10,13 @@ export class ValidateLogin {
     }));
 
     if (!user) {
-      throw new AppError( "User does not exist", 404);
+      throw new AppError( 404, "User does not exist");
     }
 
     const compare = await bcrypt.compare(req.body.password, user?.password);
 
     if (!compare) {
-      throw new AppError("Email and password do not match", 401);
+      throw new AppError( 401, "Email and password do not match");
     }
 
     res.locals.user = user;

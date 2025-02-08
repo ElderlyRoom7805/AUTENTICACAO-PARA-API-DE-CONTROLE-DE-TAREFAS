@@ -10,6 +10,6 @@ import { ValidateLogin } from "../middlewares/validateLogin.middleware";
 export const userRouter = Router()
 const usersControllers = new UsersControllers()
 
-userRouter.post("/login", ValidateBody.execute({body: loginUserSchema}), ValidateLogin.execute, usersControllers.login)
-userRouter.post("/", ValidateBody.execute({body: registerUserSchema}), DoesEmailExist.execute, usersControllers.register)
-userRouter.get("/profile", verifyToken.execute, usersControllers.profile)
+userRouter.post("/login", ValidateBody.execute({body: loginUserSchema}), ValidateLogin.execute, (req, res) => usersControllers.login (req, res))
+userRouter.post("/", ValidateBody.execute({body: registerUserSchema}), DoesEmailExist.execute, (req, res) => usersControllers.register (req, res))
+userRouter.get("/profile", verifyToken.execute, (req, res) => usersControllers.profile(req, res))

@@ -9,10 +9,12 @@ export class verifyToken {
     const token = authorization?.replace("Bearer ", "");
 
     if (!token) {
-      throw new AppError("Token is required", 401);
+      throw new AppError(401, "Token is required");
     }
 
-    jwt.verify(token, process.env.JWT_SECRET as string);
+    const secret = process.env.JWT_SECRET as string;
+
+    jwt.verify(token, secret);
 
     res.locals.decode = jwt.decode(token);
 
