@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken"
-import { IUser, TLoginReturn, TUserLoginBody, TUserRegisterBody, TUserReturn } from "../interfaces/user.interfaces"
 import { prisma } from "../database/prisma"
 import bcrypt from "bcrypt";
-import { AppError } from "../errors/appError";
-import { userReturn, tUser, tLoginReturn, tUserReturn } from "../schemas/user.schema";
+import { userReturn, tUser, tUserRegister } from "../schemas/user.schema";
+import { injectable } from "tsyringe";
 
+@injectable()
 export class UserServices{
-    async login(user: tUser): Promise<tLoginReturn> {
+    async login(user: tUser){
         const token = jwt.sign({ id: user?.id }, process.env.JWT_SECRET as string);
     
         return {
@@ -16,7 +16,7 @@ export class UserServices{
       }
     
 
-    async register(body: TUserRegisterBody): Promise<TUserReturn>{
+    async register(body: tUserRegister){
         const hashedPassword = await bcrypt.hash(body.password, 10)
         const newUser = {
             name: body.name,
@@ -28,7 +28,7 @@ export class UserServices{
         return userReturn.parse(data)
     }
 
-    async getUser(id: number): Promise<tUserReturn> {
+    async getUser(id: number) {
         const user = await prisma.user.findFirst({
           where: { id },
         });

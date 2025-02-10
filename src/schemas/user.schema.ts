@@ -11,6 +11,8 @@ export type tUser = z.infer<typeof userSchema>;
 
 export const registerUserSchema = userSchema.omit({id: true})
 
+export type tUserRegister = z.infer<typeof registerUserSchema>;
+
 export const loginUserSchema = userSchema.omit({id: true, name: true})
 
 export const userReturn = userSchema.omit({password: true});

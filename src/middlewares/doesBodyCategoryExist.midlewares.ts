@@ -2,14 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import { prisma } from "../database/prisma";
 import { AppError } from "../errors/appError";
 
-export class DoesQueryCategoryExist {
+export class DoesBodyCategoryExist {
   static async execute(req: Request, res: Response, next: NextFunction) {
     if (req.body.categoryId) {
-      const found = await prisma.category.findFirst({
+      const find = await prisma.category.findFirst({
         where: { id: Number(req.body.categoryId) },
       });
 
-      if (!found) {
+      if (!find) {
         throw new AppError(404, "Category not found");
       }
     }

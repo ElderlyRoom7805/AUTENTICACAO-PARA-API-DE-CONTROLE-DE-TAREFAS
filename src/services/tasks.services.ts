@@ -7,7 +7,8 @@ import { injectable } from "tsyringe";
 export class TasksServices{
     async createTask(body: createTaskBodyInterfaces, userId: number){
         body.userId = userId;
-        return await prisma.task.create({ data: body })
+
+        return await prisma.task.create({ data: body });
     }
 
     async getTasks(userId: number, Name?: string){
@@ -22,8 +23,10 @@ export class TasksServices{
                 }
     
             });
+
             return taskReturnSchema.array().parse(find);
-        }
+        };
+
         const all = await prisma.task.findMany({
             where: {
                 userId: userId
@@ -31,8 +34,9 @@ export class TasksServices{
             include: {
                 category: true
             }
-        })
-        return taskReturnSchema.array().parse(all)
+        });
+
+        return taskReturnSchema.array().parse(all);
     }
 
     async getOneTask(Id: number, userId: number) {
@@ -40,6 +44,7 @@ export class TasksServices{
             where: { id: Id, AND: {userId: userId} },
             include: { category: true }
         });
+
         return taskReturnSchema.parse(data);
     }
 
@@ -50,7 +55,7 @@ export class TasksServices{
               AND: {userId: userId}
             },
             data: body,
-          })
+          });
     }
 
     async deleteTask(taskId: string, userId: number){
@@ -60,7 +65,7 @@ export class TasksServices{
                 AND: {userId: userId}
             }
         })){
-            return await prisma.task.delete({where: {id: Number(taskId)}})
+            return await prisma.task.delete({where: {id: Number(taskId)}});
         }
     }
 }

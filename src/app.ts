@@ -6,7 +6,9 @@ import "dotenv/config";
 import { tasksRouter } from "./routes/tasks.routes";
 import { categoriesRouter } from "./routes/categories.routes";
 import { userRouter } from "./routes/user.routes";
-import { handleError } from "./middlewares/handleError.middleware";
+import { handleError } from "./middlewares/handleErrors.midlewares";
+
+
 
 export const app = express();
 

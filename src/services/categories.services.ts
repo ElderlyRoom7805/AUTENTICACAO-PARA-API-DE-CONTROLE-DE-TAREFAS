@@ -5,18 +5,12 @@ import { createCategoryBodyInterfaces } from "../interfaces/categories.interface
 @injectable()
 export class CategoriesServices{
     async createCategory(body: createCategoryBodyInterfaces, userId: number){
-        body.userId = userId
-        return await prisma.category.create({data: body})
+        body.userId = userId;
+
+        return await prisma.category.create({data: body});
     }
 
-    async deleteCategory(categoryId: string, userId: number){
-        if(await prisma.category.findFirst({
-            where: {
-                id: Number(categoryId),
-                AND: {userId: userId}
-            }
-        })){
-            return await prisma.category.delete({where: {id: Number(categoryId)}})
-        }
+    async deleteCategory(id: number){
+        await prisma.category.delete({ where: { id } });
     }
 }

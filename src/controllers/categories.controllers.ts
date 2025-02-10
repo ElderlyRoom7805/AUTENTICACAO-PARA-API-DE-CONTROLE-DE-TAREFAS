@@ -18,7 +18,7 @@ export class CategoriesControllers{
 
         const categoriesServices = container.resolve(CategoriesServices);
 
-        const response = await categoriesServices.deleteCategory(req.params.id, id);
+        const response = await categoriesServices.deleteCategory(Number(req.params.id));
 
         return res.status(204).json(response);
     }
