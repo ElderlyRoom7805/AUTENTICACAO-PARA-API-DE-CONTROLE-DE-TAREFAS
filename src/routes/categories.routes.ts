@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { CategoriesControllers } from "../controllers/categories.controllers";
 import { categoryBodySchema } from "../schemas/createCategory.schema";
-import { verifyToken } from "../middlewares/verifyToken";
+import { verifyToken } from "../middlewares/verifyToken.middlewares";
 import { ValidateBody } from "../middlewares/validateBody.midlewares";
-import { isTheCategoryOwner } from "../middlewares/isTheCategoryOwner";
+import { isTheCategoryOwner } from "../middlewares/isTheCategoryOwner.middlewares";
 import { DoesCategoryExist } from "../middlewares/doesCategoryExist.midlewares";
 
 export const categoriesRouter = Router();

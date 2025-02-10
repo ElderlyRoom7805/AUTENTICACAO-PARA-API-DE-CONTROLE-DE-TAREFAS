@@ -3,8 +3,8 @@ import { TasksControllers } from "../controllers/tasks.controllers";
 import { createTaskSchema } from "../schemas/createTask.schema";
 import { editTaskSchema } from "../schemas/editTask.schema";
 import { ValidateBody } from "../middlewares/validateBody.midlewares";
-import { verifyToken } from "../middlewares/verifyToken";
-import { isTheTaskOwner } from "../middlewares/isTheTaskOwner";
+import { verifyToken } from "../middlewares/verifyToken.middlewares";
+import { isTheTaskOwner } from "../middlewares/isTheTaskOwner.middlewares";
 import { DoesBodyCategoryExist } from "../middlewares/doesBodyCategoryExist.midlewares";
 import { DoesTaskExist } from "../middlewares/doesTaskExist.middlewares";
 
