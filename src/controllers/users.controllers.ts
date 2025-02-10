@@ -19,7 +19,7 @@ export class UsersControllers{
     async profile(req: Request, res: Response): Promise<Response>{
         const { id } = res.locals.decode
         const userServices = container.resolve(UserServices)
-        const response = await userServices.profile(id)
+        const response = await userServices.getUser(id)
         return res.status(200).json(response)
     }
 }

@@ -7,8 +7,17 @@ export const userSchema = z.object({
     password: z.string().min(1)
 })
 
+export type tUser = z.infer<typeof userSchema>;
+
 export const registerUserSchema = userSchema.omit({id: true})
 
 export const loginUserSchema = userSchema.omit({id: true, name: true})
 
-export const userReturn = userSchema.omit({password: true})
+export const userReturn = userSchema.omit({password: true});
+
+export type tUserReturn = z.infer<typeof userReturn>;
+
+export type tLoginReturn = {
+    accessToken: string;
+    user: tUserReturn;
+};

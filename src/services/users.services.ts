@@ -3,13 +3,18 @@ import { IUser, TLoginReturn, TUserLoginBody, TUserRegisterBody, TUserReturn } f
 import { prisma } from "../database/prisma"
 import bcrypt from "bcrypt";
 import { AppError } from "../errors/appError";
-import { userReturn } from "../schemas/user.schema";
+import { userReturn, tUser, tLoginReturn, tUserReturn } from "../schemas/user.schema";
 
 export class UserServices{
-    async login(user: IUser): Promise<TLoginReturn>{
-        const token = jwt.sign({id: user.id}, process.env.JWT_SECRET as string)
-        return {acessToken: token, user: userReturn.parse(user)}
-    }
+    async login(user: tUser): Promise<tLoginReturn> {
+        const token = jwt.sign({ id: user?.id }, process.env.JWT_SECRET as string);
+    
+        return {
+          accessToken: token,
+          user: userReturn.parse(user),
+        };
+      }
+    
 
     async register(body: TUserRegisterBody): Promise<TUserReturn>{
         const hashedPassword = await bcrypt.hash(body.password, 10)
@@ -23,8 +28,11 @@ export class UserServices{
         return userReturn.parse(data)
     }
 
-    async profile(userId: number): Promise<TUserReturn>{
-        const user = await prisma.user.findFirst({where: {id: userId}})
-        return userReturn.parse(user)
-    }
+    async getUser(id: number): Promise<tUserReturn> {
+        const user = await prisma.user.findFirst({
+          where: { id },
+        });
+    
+        return userReturn.parse(user);
+      }
 }

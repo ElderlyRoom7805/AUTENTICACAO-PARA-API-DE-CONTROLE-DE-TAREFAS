@@ -12,9 +12,7 @@ export class verifyToken {
       throw new AppError(401, "Token is required");
     }
 
-    const secret = process.env.JWT_SECRET as string;
-
-    jwt.verify(token, secret);
+    jwt.verify(token, process.env.JWT_SECRET as string);
 
     res.locals.decode = jwt.decode(token);
 
