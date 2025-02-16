@@ -2,6 +2,7 @@ import "reflect-metadata";
 import "express-async-errors";
 import express, { json } from "express";
 import helmet from "helmet";
+import cors from "cors";
 import "dotenv/config";
 import { tasksRouter } from "./routes/tasks.routes";
 import { categoriesRouter } from "./routes/categories.routes";
@@ -21,5 +22,7 @@ app.use("/categories", categoriesRouter);
 app.use("/users", userRouter);
 
 app.use(helmet());
+
+app.use(cors());
 
 app.use(handleError.execute);
